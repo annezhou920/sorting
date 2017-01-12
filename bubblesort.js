@@ -12,7 +12,7 @@ function bubbleSort(arr) {
   var swapCount = 0;
   var totalSwap = 0;
 
-  if (arr.length === 1) {
+  if (arr.length === 0 || arr.length === 1) {
     return arr;
   }
 
