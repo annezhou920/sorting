@@ -6,29 +6,37 @@ function split(wholeArray) {
 
   return [firstHalf, secondHalf];
 }
-
+// needs to be linear
 function merge(left, right){
-  var mergedArr = [];
+  var mergedArr = [],
+      leftIndex = 0,
+      rightIndex = 0;
 
-  while(left.length || right.length){
+  while(leftIndex < left.length && rightIndex < right.length){
     if (left.length && right.length){
-      if (right[0] > left[0]){
-        mergedArr.push(left.shift());
+      if (right[rightIndex] > left[leftIndex]){
+        mergedArr.push(left[leftIndex]);
+        leftIndex++;
       } else {
-        mergedArr.push(right.shift());
+        mergedArr.push(right[rightIndex]);
+        rightIndex++;
       }
     }
-    else if (left.length){
-      mergedArr.push(left.shift());
-    } else {
-      mergedArr.push(right.shift());
-    }
-  }
+    for (; leftIndex < left.length; leftIndex++) mergedArr.push(left[leftIndex]);
+    for (; rightIndex < right.length; rightIndex++) mergedArr.push(right[rightIndex]);
   return mergedArr;
 }
 
 function mergeSort(array) {
+// base case
+  if (array.length < 2) {
+    return array;
+  }
+  // general case: split the array into two halves
+  var splits = split(array),
+      left   = splits[0],
+      right  = splits[1];
 
-  /* your code here */
-
+  // sort the split arrays, merge the results
+  return merge(mergeSort(left), mergeSort(right));
 }
